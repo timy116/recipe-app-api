@@ -9,7 +9,7 @@ TOKEN_URL = reverse('user:token')
 
 
 def create_user(**params):
-    return get_user_model().objects.create(**params)
+    return get_user_model().objects.create_user(**params)
 
 
 class PublicUserApiTests(TestCase):
@@ -71,6 +71,7 @@ class PublicUserApiTests(TestCase):
             'email': 'test@gmail.com',
             'password': 'test123456',
         }
+        create_user(**payload)
         resp = self.client.post(TOKEN_URL, payload)
 
         self.assertIn('token', resp.data)
